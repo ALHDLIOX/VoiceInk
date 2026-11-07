@@ -75,6 +75,11 @@ class OpenAICompatibleTranscriptionService {
             field("language", selectedLanguage)
         }
 
+        // Send the dictionary as the OpenAI `prompt` hint so the server can bias spelling toward it.
+        if let terms = context.vocabulary?.terms, !terms.isEmpty {
+            field("prompt", terms.prefix(200).joined(separator: ", "))
+        }
+
         append("--\(boundary)--\(crlf)")
         return body
     }

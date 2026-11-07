@@ -83,18 +83,26 @@ struct CustomModelConnectionTester {
         return .failure(message: result.errorMessage ?? String(localized: "Could not verify this API key"))
     }
 
-    /// HTTPS everywhere; plain HTTP only toward loopback, matching the app's
-    /// existing local-server use cases (e.g. Ollama at http://localhost:11434).
+    /// HTTPS everywhere; plain HTTP only toward loopback (e.g. Ollama at
+    /// http://localhost:11434) or a Tailscale peer, whose traffic WireGuard already encrypts.
     private static func isAllowedScheme(_ url: URL) -> Bool {
         switch url.scheme?.lowercased() {
         case "https":
             return true
         case "http":
             let host = url.host?.lowercased() ?? ""
-            return host == "localhost" || host == "127.0.0.1" || host == "::1"
+            return host == "localhost" || host == "127.0.0.1" || host == "::1" || isTailscaleHost(host)
         default:
             return false
         }
+    }
+
+    /// Tailscale addresses live in the CGNAT range 100.64.0.0/10; MagicDNS names end in .ts.net.
+    private static func isTailscaleHost(_ host: String) -> Bool {
+        if host.hasSuffix(".ts.net") { return true }
+        let octets = host.split(separator: ".").compactMap { UInt8($0) }
+        guard octets.count == 4, host.split(separator: ".").count == 4 else { return false }
+        return octets[0] == 100 && (64...127).contains(octets[1])
     }
 
     private static func serverMessage(from data: Data) -> String {
