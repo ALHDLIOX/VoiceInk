@@ -3,6 +3,10 @@
 - `AppIcon.svg`: the artwork (white waveform on black). Its `rx` rounded rect is only a preview shape.
 - `mask-1024.png`: upstream's 1024 icon, used only for its alpha channel (Apple's continuous-corner squircle).
   macOS 26+ shrinks icons whose shape doesn't match the template and puts them on a grey plate.
+- Keep the PNGs non-grayscale: if every pixel is grey, actool stores the icon as Monochrome in
+  Assets.car and macOS 26+ puts it on the grey plate even with the right shape. `compose.swift`
+  adds 1/255 to the blue channel for that reason. Check with
+  `xcrun assetutil --info <app>/Contents/Resources/Assets.car | grep ColorModel` (want RGB).
 
 Regenerate:
 
