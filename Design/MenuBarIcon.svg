@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="750" height="750" viewBox="0 0 750 750">
+  <!-- 菜单栏模板图：和 App 图标同一笔波形，去掉底框；只看透明度，系统按菜单栏颜色染色 -->
+  <g transform="translate(375 375) scale(1.13) translate(-512 -512) translate(-13 0)">
+    <path d="M300 552 C318 470 326 267 389 267 C463 267 457 757 539 757 C615 757 613 357 677 357 C722 357 732 470 750 548" fill="none" stroke="#000" stroke-width="84" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

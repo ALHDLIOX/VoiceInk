@@ -18,3 +18,6 @@ swift Design/compose.swift Design/mask-1024.png render-1024.png out-1024.png
 for s in 512 256 128 64 32 16; do sips -z $s $s out-1024.png --out VoiceInk/Assets.xcassets/AppIcon.appiconset/$s-mac.png; done
 cp out-1024.png VoiceInk/Assets.xcassets/AppIcon.appiconset/1024-mac.png
 ```
+
+- `MenuBarIcon.svg`: the status-bar template image (same waveform, no background). Render to a transparent
+  750×750 PNG into `VoiceInk/Assets.xcassets/menuBarIcon.imageset/menuBarIcon.png`; only alpha matters.
